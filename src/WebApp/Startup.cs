@@ -8,6 +8,8 @@ namespace WebApp
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using AutoMapper;
+    using MediatR;
     using Hangfire;
 
     public class Startup
@@ -25,6 +27,11 @@ namespace WebApp
         {
             services.AddMvc();
             services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireConnectionString")));
+
+            services.AddAutoMapper();
+            Mapper.AssertConfigurationIsValid();
+
+            services.AddMediatR();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
