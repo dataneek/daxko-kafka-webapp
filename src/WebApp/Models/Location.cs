@@ -2,7 +2,7 @@
 {
     public class Location : Entity
     {
-        public Location(ILocationChangeset c)
+        public Location(ILocationUpdate c)
         {
             UpdateFromChangeset(c);
             OnCreated(new LocationEvent.Created(this));
@@ -15,13 +15,13 @@
         public string LocationName { get; private set; }
 
 
-        public void Update(ILocationChangeset c)
+        public void Update(ILocationUpdate c)
         {
             UpdateFromChangeset(c);
             OnUpdated(new LocationEvent.Updated(this));
         }
 
-        private void UpdateFromChangeset(ILocationChangeset c)
+        private void UpdateFromChangeset(ILocationUpdate c)
         {
             LocationName = c.LocationName;
         }

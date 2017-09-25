@@ -1,11 +1,14 @@
 ﻿namespace WebApp.Models
 {
-    using System;
-    using System.Collections.Generic;
+    using System.Data;
+    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-
+    using Microsoft.EntityFrameworkCore.Storage;
+    
     public class AppDbContext : DbContext
     {
+        private IDbContextTransaction currentTransaction;
+
         public AppDbContext(DbContextOptions options)
             : base(options) { }
 
@@ -14,10 +17,6 @@
         public DbSet<Location> Locations { get; set; }
         public DbSet<LocationCheckin> LocationCheckin { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"server =.\sqlexpress; initial catalog = kafka-webapp; integrated security = true; ");
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +48,55 @@
 
             modelBuilder.Entity<LocationCheckin>()
                 .HasOne(t => t.Location).WithMany().HasForeignKey(t => t.LocationId);
+        }
+
+        public async Task BeginTransactionAsync()
+        {
+            if (currentTransaction != null)
+            {
+                return;
+            }
+
+            currentTransaction = await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            try
+            {
+                await SaveChangesAsync();
+
+                currentTransaction?.Commit();
+            }
+            catch
+            {
+                RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                if (currentTransaction != null)
+                {
+                    currentTransaction.Dispose();
+                    currentTransaction = null;
+                }
+            }
+        }
+
+        public void RollbackTransaction()
+        {
+            try
+            {
+                currentTransaction?.Rollback();
+            }
+            finally
+            {
+                if (currentTransaction != null)
+                {
+                    currentTransaction.Dispose();
+                    currentTransaction = null;
+                }
+            }
         }
     }
 }

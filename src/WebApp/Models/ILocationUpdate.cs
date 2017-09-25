@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface ILocationChangeset
+    public interface ILocationUpdate
     {
         string LocationName { get; }
     }

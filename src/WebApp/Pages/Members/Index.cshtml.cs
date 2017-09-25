@@ -7,9 +7,17 @@
     using Hangfire;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+    using MediatR;
 
     public class IndexModel : PageModel
     {
+        private readonly IMediator mediator;
+
+        public IndexModel(IMediator mediator)
+        {
+            this.mediator = mediator;
+        }
+
         public string Message { get; set; }
 
         public void OnGet()
@@ -19,7 +27,8 @@
 
         public IActionResult OnPostAsync()
         {
-            BackgroundJob.Enqueue(() => Console.WriteLine("this is a member job"));
+            this.mediator.Send(new CreateCommand { NumberToCreate = 5 });
+            //BackgroundJob.Enqueue(() => Console.WriteLine("this is a member job"));
 
             return Page();
         }

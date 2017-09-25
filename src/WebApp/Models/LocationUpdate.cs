@@ -1,6 +1,6 @@
 ﻿namespace WebApp.Models
 {
-    public class LocationChangeset : ILocationChangeset
+    public class LocationUpdate : ILocationUpdate
     {
         public string LocationName { get; set; }
         public double? Longitude { get; set; }

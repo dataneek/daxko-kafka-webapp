@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IMemberChangeset
+    public interface IMemberUpdate
     {
         string Email { get; }
         string FirstName { get; }

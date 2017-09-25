@@ -4,7 +4,7 @@
 
     public class Member : Entity, IDeletable
     {
-        public Member(IMemberChangeset c)
+        public Member(IMemberUpdate c)
         {
             UpdateFromChangeset(c);
             OnCreated(new MemberEvent.Created(this));
@@ -22,13 +22,13 @@
         public bool IsDeleted { get; private set; }
 
 
-        public void Update(IMemberChangeset c)
+        public void Update(IMemberUpdate c)
         {
             UpdateFromChangeset(c);
             OnUpdated(new MemberEvent.Updated(this));
         }
 
-        private void UpdateFromChangeset(IMemberChangeset c)
+        private void UpdateFromChangeset(IMemberUpdate c)
         {
             Email = c.Email;
             FirstName = c.FirstName;

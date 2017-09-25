@@ -1,8 +1,9 @@
 ﻿namespace WebApp.Models
 {
     using System;
+    using MediatR;
 
-    public class MemberEvent : IDomainEvent
+    public class MemberEvent : IDomainEvent, INotification
     {
         public MemberEvent(Member member)
         {

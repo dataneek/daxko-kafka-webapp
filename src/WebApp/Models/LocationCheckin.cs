@@ -13,6 +13,9 @@
             OnCreated(new LocationCheckinEvent.Completed(this));
         }
 
+        private LocationCheckin() { }
+
+
         public int LocationCheckinId { get; private set; }
         public int MemberId { get; private set; }
         public Member Member { get; private set; }
