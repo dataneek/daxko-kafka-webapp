@@ -1,8 +1,9 @@
 ﻿namespace WebApp.Models
 {
     using System;
+    using MediatR;
 
-    public abstract class LocationEvent : IDomainEvent
+    public abstract class LocationEvent : IDomainEvent, INotification
     {
         public LocationEvent(Location Location)
         {

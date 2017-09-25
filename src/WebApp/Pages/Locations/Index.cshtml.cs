@@ -1,26 +1,34 @@
 ﻿namespace WebApp.Pages.Locations
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
-    using Hangfire;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+    using PaginableCollections;
+    using WebApp.Models;
 
     public class IndexModel : PageModel
     {
-        public string Message { get; set; }
+        const int ItemCountPerPage = 100;
+        private readonly AppDbContext context;
 
-        public void OnGet()
+        public IndexModel(AppDbContext context)
         {
+            this.context = context;
+        }
 
+        public IPaginable<Location> Locations { get; private set; }
+
+
+        public void OnGet(int? pageNumber = 1)
+        {
+            Locations =
+                context.Locations
+                    .OrderByDescending(t => t.Created)
+                    .ToPaginable(pageNumber.Value, ItemCountPerPage);
         }
 
         public IActionResult OnPostAsync()
         {
-            BackgroundJob.Enqueue(() => Console.WriteLine("this is a location job"));
-
             return Page();
         }
     }
