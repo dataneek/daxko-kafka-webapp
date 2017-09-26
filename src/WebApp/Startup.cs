@@ -29,7 +29,7 @@ namespace WebApp
         {
             services.AddMvc();
 
-            services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireConnectionString")));
+            //services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireConnectionString")));
 
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
@@ -54,8 +54,8 @@ namespace WebApp
             }
 
             app.UseStaticFiles();
-            app.UseHangfireServer();
-            app.UseHangfireDashboard();
+            //app.UseHangfireServer();
+            //app.UseHangfireDashboard();
             
             app.UseMvc(routes =>
             {
