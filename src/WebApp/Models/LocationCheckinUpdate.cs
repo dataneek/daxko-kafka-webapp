@@ -6,6 +6,6 @@
     {
         public Location Location { get; set;}
         public Member Member { get; set;}
-        public DateTimeOffset CheckinCompleted { get; set;}
+        public DateTime CheckinCompleted { get; set;}
     }
 }
