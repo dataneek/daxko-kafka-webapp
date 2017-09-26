@@ -4,20 +4,11 @@
 
     public class LocationCheckin : Entity
     {
-        public LocationCheckin(Location location, Member member)
+        public LocationCheckin(ILocationCheckinUpdate c)
         {
-            this.Member = member;
-            this.Location = location;
-            this.CheckinCompleted = DateTimeOffset.Now;
-
-            OnCreated(new LocationCheckinEvent.Completed(this));
-        }
-
-        public LocationCheckin(Location location, Member member, DateTimeOffset CheckinCompleted)
-        {
-            this.Member = member;
-            this.Location = location;
-            this.CheckinCompleted = CheckinCompleted;
+            this.Member = c.Member;
+            this.Location = c.Location;
+            this.CheckinCompleted = c.CheckinCompleted;
 
             OnCreated(new LocationCheckinEvent.Completed(this));
         }

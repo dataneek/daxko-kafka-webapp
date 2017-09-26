@@ -27,7 +27,7 @@ namespace WebApp.Pages.LocationCheckins
                    .Select(t =>
                    {
                        return
-                           new Faker<LocationCheckin>()
+                           new Faker<LocationCheckinUpdate>()
                                .RuleFor(r => r.Member, s => s.PickRandom(members))
                                .RuleFor(r => r.Location, s => s.PickRandom(locations))       
                                .RuleFor(r => r.CheckinCompleted, s => s.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
@@ -35,7 +35,7 @@ namespace WebApp.Pages.LocationCheckins
                    })
                    .ToArray();
 
-            var LocationCheckins = locationCheckinUpdates.Select( t => new LocationCheckin(t.Location, t.Member, t.CheckinCompleted));
+            var LocationCheckins = locationCheckinUpdates.Select( t => new LocationCheckin(t));
             
             context.LocationCheckin.AddRange(LocationCheckins);
 
