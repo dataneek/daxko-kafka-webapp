@@ -6,6 +6,6 @@
     {
         Location Location { get; }
         Member Member { get; }
-        DateTimeOffset CheckinCompleted { get; }
+        DateTime CheckinCompleted { get; }
     }
 }

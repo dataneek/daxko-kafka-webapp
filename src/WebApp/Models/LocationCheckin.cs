@@ -22,6 +22,6 @@
 
         public int LocationId { get; private set; }
         public Location Location { get; private set; }
-        public DateTimeOffset CheckinCompleted { get; private set; }
+        public DateTime CheckinCompleted { get; private set; }
     }
 }

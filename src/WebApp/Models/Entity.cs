@@ -7,8 +7,8 @@
     {
         public ICollection<IDomainEvent> Events { get; private set; } = new List<IDomainEvent>();
 
-        public DateTimeOffset Created { get; protected set; } = DateTimeOffset.Now;
-        public DateTimeOffset? LastUpdated { get; protected set; }
+        public DateTime Created { get; protected set; } = DateTime.UtcNow;
+        public DateTime LastUpdated { get; protected set; } = DateTime.UtcNow;
 
         public byte[] Watermark { get; private set; }
         public Guid RowId { get; protected set; } = Guid.NewGuid();
@@ -37,7 +37,7 @@
             if (domainEvents != null)
                 CaptureEvent(domainEvents);
 
-            this.LastUpdated = DateTimeOffset.Now;
+            this.LastUpdated = DateTime.UtcNow;
         }
     }
 }
