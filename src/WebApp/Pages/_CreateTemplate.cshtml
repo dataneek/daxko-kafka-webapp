@@ -1,0 +1,22 @@
+@model WebApp.Models.CreateModel
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="Create-form">
+    <form method="post" class="form-inline">
+        Create <select asp-for="@Model.selected_option" asp-items="@Model.options" class="form-control-sm"></select> @ViewData["Title"]
+        <button type="submit" asp-page-handler="Create">Create</button>
+    </form>
+</div>
+
+</br>
+
+@if(!String.IsNullOrEmpty(Model.message))
+{
+    <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> @Model.message
+    </div>
+}
+
+<p><strong> Showing last <mark>@Model.page_count</mark> @ViewData["Title"] of <mark>@Model.total_count</mark> </strong></p>

@@ -1,12 +1,34 @@
 ﻿@page
 @model IndexModel
+
 @{
     ViewData["Title"] = "Members";
 }
-<h2>@ViewData["Title"]</h2>
 
+@{ Html.RenderPartial("_CreateTemplate", Model.CreateModel); }
 
-<form method="post">
-    <button type="submit">Submit</button>
-</form>
-<hr />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>   
+            <th>Gender</th> 
+            <th>Birthdate</th>          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var p in Model.Members)
+        {
+            <tr>
+                <td>@p.Item.FirstName</td>
+                <td>@p.Item.LastName</td>
+                <td>@p.Item.Email</td>
+                <td>@p.Item.Phone</td>   
+                <td>@p.Item.Gender</td> 
+                <td>@p.Item.Birthdate</td>          
+            </tr>
+        }
+    </tbody>
+</table>

@@ -3,10 +3,23 @@
 @{
     ViewData["Title"] = "Locations";
 }
-<h2>@ViewData["Title"]</h2>
 
+@{ Html.RenderPartial("_CreateTemplate", Model.CreateModel); }
 
-<form method="post">
-    <button type="submit">Submit</button>
-</form>
-<hr />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>       
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var p in Model.Locations)
+        {
+            <tr>
+                <td>@p.Item.LocationId</td>
+                <td>@p.Item.LocationName</td>         
+            </tr>
+        }
+    </tbody>
+</table>

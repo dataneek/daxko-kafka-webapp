@@ -13,6 +13,15 @@
             OnCreated(new LocationCheckinEvent.Completed(this));
         }
 
+        public LocationCheckin(Location location, Member member, DateTimeOffset CheckinCompleted)
+        {
+            this.Member = member;
+            this.Location = location;
+            this.CheckinCompleted = CheckinCompleted;
+
+            OnCreated(new LocationCheckinEvent.Completed(this));
+        }
+
         private LocationCheckin() { }
 
 

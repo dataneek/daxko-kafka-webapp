@@ -3,10 +3,25 @@
 @{
     ViewData["Title"] = "Location Checkins";
 }
-<h2>@ViewData["Title"]</h2>
 
+@{ Html.RenderPartial("_CreateTemplate", Model.CreateModel); }
 
-<form method="post">
-    <button type="submit">Submit</button>
-</form>
-<hr />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Member</th>
+            <th>Location</th>
+            <th>Time</th>         
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var p in Model.LocationCheckins)
+        {
+            <tr>
+                <td>@p.Item.Member.FirstName @p.Item.Member.LastName</td>
+                <td>@p.Item.Location.LocationName</td>
+                <td>@p.Item.CheckinCompleted</td>        
+            </tr>
+        }
+    </tbody>
+</table>
