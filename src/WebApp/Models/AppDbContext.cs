@@ -17,6 +17,7 @@
         public DbSet<Location> Locations { get; set; }
         public DbSet<LocationCheckin> LocationCheckin { get; set; }
         public DbSet<LocationChangeset> LocationChangesets { get; set; }
+        public DbSet<MemberChangeset> MemberChangesets { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,6 +58,14 @@
 
             modelBuilder.Entity<LocationChangeset>()
                 .HasOne(t => t.Location).WithMany().HasForeignKey(t => t.LocationId);
+
+
+            modelBuilder.Entity<MemberChangeset>()
+                .ToTable("MemberChangeset", "dbo")
+                .HasKey(t => t.MemberChangesetId);
+
+            modelBuilder.Entity<MemberChangeset>()
+                .HasOne(t => t.Member).WithMany().HasForeignKey(t => t.MemberId);
         }
 
         public async Task BeginTransactionAsync()

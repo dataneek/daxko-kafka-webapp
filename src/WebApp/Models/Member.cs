@@ -31,11 +31,11 @@
         private void UpdateFromChangeset(IMemberUpdate c)
         {
             Email = c.Email;
+            Phone = c.Phone;
             FirstName = c.FirstName;
             LastName = c.LastName;
             Gender = c.Gender;
             Birthdate = c.Birthdate;
-            Phone = c.Phone;
         }
 
         public void Delete()
