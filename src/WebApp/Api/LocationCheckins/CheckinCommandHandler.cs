@@ -8,7 +8,7 @@ using WebApp.Models;
 
 namespace WebApp.Api.LocationCheckins
 {
-    public class CheckinCommandHandler : IRequestHandler<CheckinCommand>
+    public class CheckinCommandHandler : IRequestHandler<CheckinCommand, CheckinResponse>
     {
         private readonly AppDbContext context;
         private readonly IMediator mediator;
@@ -19,7 +19,7 @@ namespace WebApp.Api.LocationCheckins
             this.mediator = mediator;
         }
 
-        void IRequestHandler<CheckinCommand>.Handle(CheckinCommand message)
+        public CheckinResponse Handle(CheckinCommand message)
         {
             var member = context.Members.FirstOrDefault(x => x.MemberId == message.memberId);
             var location = context.Locations.FirstOrDefault(x => x.LocationId == message.locationId);
@@ -43,6 +43,13 @@ namespace WebApp.Api.LocationCheckins
                 mediator.Publish(notification);
                 
             context.SaveChanges();
+
+            return new CheckinResponse
+            {
+                firstName = member.FirstName,
+                lastName = member.LastName,
+                locationName = location.LocationName
+            };
         }
     }
 }
