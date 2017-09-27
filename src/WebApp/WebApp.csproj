@@ -20,5 +20,6 @@
   <ItemGroup>
     <Folder Include="Api\" />
     <Folder Include="Api\LocationCheckins\" />
+    <Folder Include="Api\Locations\" />
   </ItemGroup>
 </Project>

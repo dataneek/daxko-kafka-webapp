@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using Bogus;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using WebApp.Models;
 
 namespace WebApp.Api.LocationCheckins
@@ -20,14 +21,14 @@ namespace WebApp.Api.LocationCheckins
 
         void IRequestHandler<CheckinCommand>.Handle(CheckinCommand message)
         {
-            var member = context.Members.FirstOrDefault(x => x.MemberId == message.MemberId);
-            var location = context.Locations.FirstOrDefault(x => x.LocationId == message.LocationId);
+            var member = context.Members.FirstOrDefault(x => x.MemberId == message.memberId);
+            var location = context.Locations.FirstOrDefault(x => x.LocationId == message.locationId);
             
             if (member == null)
-                throw new HttpRequestException("Unable to find member");
+                throw new ArgumentException("Unable to find member");
 
             if (location == null)
-                throw new HttpRequestException("Unable to find location");
+                throw new ArgumentException("Unable to find location");
             
             var checkin = new LocationCheckin(new LocationCheckinUpdate
             {

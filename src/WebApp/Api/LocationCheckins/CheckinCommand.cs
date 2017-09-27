@@ -5,7 +5,7 @@ namespace WebApp.Api.LocationCheckins
 {
     public class CheckinCommand : IRequest
     {
-        public int MemberId { get; set; }
-        public int LocationId { get; set; }
+        public int memberId { get; set; }
+        public int locationId { get; set; }
     }
 }
