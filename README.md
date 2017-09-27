@@ -17,7 +17,7 @@ GET /api/locations
 ## Check member into a location
 
 ```
-POST /api/locationcheckins
+POST /api/locationcheckin
 {
 	"memberId": 1234,
 	"locationId": 5678
