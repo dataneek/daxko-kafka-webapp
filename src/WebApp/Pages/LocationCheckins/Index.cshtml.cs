@@ -38,7 +38,7 @@
 
             mediator.Send(new CreateCommand(){NumberToCreate = NumberToCreate});
 
-            CreateModel.message = $"{NumberToCreate} Members Created";            
+            CreateModel.message = $"{NumberToCreate} Location Checkins Created";            
 
             get_location_checkins();
 

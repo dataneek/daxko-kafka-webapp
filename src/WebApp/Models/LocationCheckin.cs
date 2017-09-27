@@ -6,8 +6,8 @@
     {
         public LocationCheckin(ILocationCheckinUpdate c)
         {
-            this.Member = c.Member;
-            this.Location = c.Location;
+            this.MemberId = c.Member.MemberId;
+            this.LocationId = c.Location.LocationId;
             this.CheckinCompleted = c.CheckinCompleted;
 
             OnCreated(new LocationCheckinEvent.Completed(this));
