@@ -9,7 +9,7 @@ namespace WebApp.Models
     {
         public MemberChangeset(Member member, MemberChangesetMode changesetMode, string changeset)
         {
-            this.Member = member;
+            this.MemberId = member.MemberId;
             this.Changeset = changeset;
             this.ChangesetMode = changesetMode;
         }

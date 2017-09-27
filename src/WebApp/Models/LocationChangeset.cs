@@ -9,7 +9,7 @@ namespace WebApp.Models
     {
         public LocationChangeset(Location location, LocationChangesetMode changesetMode, string changeset)
         {
-            this.Location = location;
+            this.LocationId = location.LocationId;
             this.Changeset = changeset;
             this.ChangesetMode = changesetMode;
         }
