@@ -11,7 +11,6 @@ namespace WebApp
     using Microsoft.EntityFrameworkCore;
     using AutoMapper;
     using MediatR;
-    using Hangfire;
     using WebApp.Models;
 
     public class Startup
@@ -28,8 +27,6 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-
-            services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireConnectionString")));
 
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
@@ -54,8 +51,6 @@ namespace WebApp
             }
 
             app.UseStaticFiles();
-            app.UseHangfireServer();
-            app.UseHangfireDashboard();
             
             app.UseMvc(routes =>
             {
