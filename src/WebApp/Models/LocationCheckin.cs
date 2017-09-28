@@ -10,7 +10,7 @@
             this.LocationId = c.Location.LocationId;
             this.CheckinCompleted = c.CheckinCompleted;
 
-            OnCreated(new LocationCheckinEvent.Completed(this));
+            OnCreated(new LocationCheckinEvent.Created(this));
         }
 
         private LocationCheckin() { }

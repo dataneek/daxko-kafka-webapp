@@ -27,8 +27,8 @@ namespace WebApp.Pages.LocationCheckins
 
         void IRequestHandler<CreateCommand>.Handle(CreateCommand message)
         {
-            var members = getRandomMembersTask.get(message.NumberToCreate);
-            var locations = getRandomLocationsTask.get(message.NumberToCreate);
+            var members = context.Members.OrderBy(t=> t.MemberId).ToList();
+            var locations = context.Locations.OrderBy(t=> t.LocationId).ToList();
 
             var locationCheckinUpdates = Enumerable.Range(0, message.NumberToCreate)
                    .Select(t =>
@@ -42,11 +42,13 @@ namespace WebApp.Pages.LocationCheckins
                    })
                    .ToArray();
 
-            var LocationCheckins = locationCheckinUpdates.Select( t => new LocationCheckin(t));
+            var locationCheckins = 
+                locationCheckinUpdates.Select( t => new LocationCheckin(t))
+                .ToArray();
             
-            context.LocationCheckin.AddRange(LocationCheckins);
+            context.LocationCheckin.AddRange(locationCheckins);
 
-            foreach (var notification in LocationCheckins.SelectMany(t => t.Events.OfType<INotification>()))
+            foreach (var notification in locationCheckins.SelectMany(t => t.Events.OfType<INotification>()))
                 mediator.Publish(notification);
                 
             context.SaveChanges();

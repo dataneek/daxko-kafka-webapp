@@ -11,6 +11,8 @@ namespace WebApp
             public const string LocationCreated = "daxko-kafka-webapp-location-create";
             public const string LocationUpdated = "daxko-kafka-webapp-location-update";
             public const string LocationDeleted = "daxko-kafka-webapp-location-delete";
+
+            public const string LocationCheckinCreated = "daxko-kafka-webapp-location-checkin-create";
         }
     }
 }
