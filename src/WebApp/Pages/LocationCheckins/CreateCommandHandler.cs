@@ -4,6 +4,7 @@ using System.Linq;
 using Bogus;
 using MediatR;
 using WebApp.Models;
+using WebApp.Core;
 
 namespace WebApp.Pages.LocationCheckins
 {
@@ -11,17 +12,23 @@ namespace WebApp.Pages.LocationCheckins
     {
         private readonly AppDbContext context;
         private readonly IMediator mediator;
+        private readonly IGetRandomMembersTask getRandomMembersTask;
+        private readonly IGetRandomLocationsTask getRandomLocationsTask;
+        
 
-        public CreateCommandHandler(AppDbContext context, IMediator mediator)
+        public CreateCommandHandler(AppDbContext context, IMediator mediator, 
+            IGetRandomMembersTask getRandomMembersTask, IGetRandomLocationsTask getRandomLocationsTask)
         {
             this.context = context;
             this.mediator = mediator;
+            this.getRandomMembersTask = getRandomMembersTask;
+            this.getRandomLocationsTask = getRandomLocationsTask;
         }
 
         void IRequestHandler<CreateCommand>.Handle(CreateCommand message)
         {
-            var members = context.Members.ToList();
-            var locations = context.Locations.ToList();
+            var members = getRandomMembersTask.get(message.NumberToCreate);
+            var locations = getRandomLocationsTask.get(message.NumberToCreate);
 
             var locationCheckinUpdates = Enumerable.Range(0, message.NumberToCreate)
                    .Select(t =>

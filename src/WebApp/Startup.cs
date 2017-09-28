@@ -13,6 +13,7 @@ namespace WebApp
     using MediatR;
     using WebApp.Common;
     using WebApp.Models;
+    using WebApp.Core;
 
     public class Startup
     {
@@ -41,6 +42,9 @@ namespace WebApp
             Mapper.AssertConfigurationIsValid();
 
             services.AddMediatR(typeof(Startup).Assembly);
+            services.AddTransient<IGetRandomMembersTask, GetRandomMembersTask>();
+            services.AddTransient<IGetRandomLocationsTask, GetRandomLocationsTask>();
+            
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
