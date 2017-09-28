@@ -14,8 +14,10 @@
 
 
         public DbSet<Member> Members { get; set; }
+        public DbSet<MemberChangeset> MemberChangesets { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<LocationCheckin> LocationCheckin { get; set; }
+        public DbSet<LocationChangeset> LocationChangesets { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +26,8 @@
                 .ToTable("Member", "dbo")
                 .HasKey(t => t.MemberId);
 
+            modelBuilder.Entity<Member>().HasQueryFilter(e => !e.IsDeleted);
+
             modelBuilder.Entity<Member>()
                 .Property(t => t.Watermark).IsRowVersion();
 
@@ -31,6 +35,8 @@
             modelBuilder.Entity<Location>()
                 .ToTable("Location", "dbo")
                 .HasKey(t => t.LocationId);
+
+            modelBuilder.Entity<Location>().HasQueryFilter(e => !e.IsDeleted);
 
             modelBuilder.Entity<Location>()
                 .Property(t => t.Watermark).IsRowVersion();
@@ -48,6 +54,14 @@
 
             modelBuilder.Entity<LocationCheckin>()
                 .HasOne(t => t.Location).WithMany().HasForeignKey(t => t.LocationId);
+
+            modelBuilder.Entity<LocationChangeset>()
+                .ToTable("LocationChangeset", "dbo")
+                .HasKey(t => t.LocationChangesetId);
+
+            modelBuilder.Entity<MemberChangeset>()
+                .ToTable("MemberChangeset", "dbo")
+                .HasKey(t => t.MemberChangesetId);
         }
 
         public async Task BeginTransactionAsync()

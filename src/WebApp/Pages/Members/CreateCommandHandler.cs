@@ -42,12 +42,11 @@
             var members =
                 memberUpdates.Select(t => new Member(t));
 
-            context.Members.AddRange(members);
-
+            context.Members.AddRange(members);                
+            context.SaveChanges();
+            
             foreach (var notification in members.SelectMany(t => t.Events.OfType<INotification>()))
                 mediator.Publish(notification);
-                
-            context.SaveChanges();
         }
     }
 }

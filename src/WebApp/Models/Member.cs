@@ -1,6 +1,7 @@
 ﻿namespace WebApp.Models
 {
     using System;
+    using System.Collections.Generic;
 
     public class Member : Entity, IDeletable
     {

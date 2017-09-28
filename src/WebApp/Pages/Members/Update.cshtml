@@ -1,0 +1,71 @@
+﻿@page "{id:guid}"
+@model UpdateModel
+
+@{
+    ViewData["Title"] = "Edit Members";
+}
+
+
+<h1>Edit Member</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="All"></div>
+            <input asp-for="Input.Id" type="hidden" />
+
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <div>
+                    <input class="form-control" asp-for="Input.FirstName" />
+                    <span asp-validation-for="Input.FirstName"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <div>
+                    <input class="form-control" asp-for="Input.LastName" />
+                    <span asp-validation-for="Input.LastName"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Phone"></label>
+                <div>
+                    <input class="form-control" asp-for="Input.Phone" />
+                    <span asp-validation-for="Input.Phone"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <div>
+                    <input class="form-control" asp-for="Input.Email" />
+                    <span asp-validation-for="Input.Email"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Gender"></label>
+                <div>
+                    <input class="form-control" asp-for="Input.Gender" />
+                    <span asp-validation-for="Input.Gender"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Birthdate"></label>
+                <div>
+                    <input class="form-control" asp-for="Input.Birthdate" />
+                    <span asp-validation-for="Input.Birthdate"></span>
+                </div>
+            </div>
+        
+            <div>
+                <a class="btn btn-default" asp-page="/Members/Index">Back</a>
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

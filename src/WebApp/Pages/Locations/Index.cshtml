@@ -9,8 +9,9 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>       
+            <th>#</th>
+            <th>Name</th> 
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -18,7 +19,11 @@
         {
             <tr>
                 <td>@p.Item.LocationId</td>
-                <td>@p.Item.LocationName</td>         
+                <td>@p.Item.LocationName</td>  
+                <td>
+                    <a asp-page="/Locations/Update" asp-route-id="@p.Item.RowId">edit</a>
+                    <a asp-page="/Locations/Delete" asp-route-id="@p.Item.RowId">delete</a>
+                </td>      
             </tr>
         }
     </tbody>
