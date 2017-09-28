@@ -47,7 +47,14 @@
 
         private void get_location_checkins()
         {
-            LocationCheckins =  context.LocationCheckin.Include(t => t.Member).Include(t => t.Location).OrderByDescending(t => t.Created).ToPaginable(1, CreateModel.page_size);
+            LocationCheckins = 
+                context.LocationCheckin
+                    .AsNoTracking()
+                    .Include(t => t.Member)
+                    .Include(t => t.Location)
+                    .OrderByDescending(t => t.Created)
+                    .ToPaginable(1, CreateModel.page_size);
+
             CreateModel.total_count = LocationCheckins.TotalItemCount;
             CreateModel.page_count = LocationCheckins.Count;
         }
