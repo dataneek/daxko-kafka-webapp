@@ -4,3 +4,27 @@
     ViewData["Title"] = "Home page";
 }
 
+<h2>Summary</h2>
+
+<div class="home-page-content">
+  <div class="row">
+    <div class="col-xs-4">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Members</h4>
+            <h1>@Model.HomePageModel.total_members</h1>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Locations</h4>
+            <h1>@Model.HomePageModel.total_locations</h1>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Location Checkins</h4>
+            <h1>@Model.HomePageModel.total_location_checkins</h1>
+        </div>
+    </div>
+  </div>
+</div>
