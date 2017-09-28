@@ -7,47 +7,23 @@
     using System.Text;
     using MediatR;
     using Models;
-    using Newtonsoft.Json;
-    using Confluent.Kafka;
-    using Confluent.Kafka.Serialization;
     using Common;
+    using DotNetCore.CAP;
 
-    public class CreatedKafkaHandler : INotificationHandler<LocationCheckinEvent.Created>
+    public class CreatedKafkaHandler : IAsyncNotificationHandler<LocationCheckinEvent.Created>
     {
-        private readonly KafkaSettings kafkaSettings;
+        private readonly ICapPublisher publisher;
 
-        public CreatedKafkaHandler(KafkaSettings kafkaSettings)
+        public CreatedKafkaHandler(ICapPublisher publisher)
         {
-            this.kafkaSettings = kafkaSettings;
+            this.publisher = publisher;
         }
 
-        void INotificationHandler<LocationCheckinEvent.Created>.Handle(LocationCheckinEvent.Created notification)
+        async Task IAsyncNotificationHandler<LocationCheckinEvent.Created>.Handle(LocationCheckinEvent.Created notification)
         {
-            try
-            {
-                HandleInternal(notification.LocationCheckin);
-            }
-            catch(Exception) { }
-        }
-
-        private void HandleInternal(LocationCheckin t)
-        {
-            var content = JsonConvert.SerializeObject(new LocationCheckinData(t));
-            var config = new Dictionary<string, object> 
-            { 
-                { "bootstrap.servers", kafkaSettings.BrokerList } 
-            };
-
-            using (var producer = new Producer<string, string>(config, new StringSerializer(Encoding.UTF8), new StringSerializer(Encoding.UTF8)))
-            {
-                var deliveryReport = 
-                    producer.ProduceAsync(
-                        Constants.KafkaTopics.LocationCheckinCreated, 
-                        null, 
-                        content);
-
-                var result = deliveryReport.Result; 
-            }
+            await publisher.PublishAsync(
+                Constants.KafkaTopics.LocationCheckinCreated, 
+                new LocationCheckinData(notification.LocationCheckin));
         }
     }
 }

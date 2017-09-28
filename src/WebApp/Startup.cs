@@ -14,6 +14,7 @@ namespace WebApp
     using WebApp.Common;
     using WebApp.Models;
     using WebApp.Core;
+    using DotNetCore.CAP;
 
     public class Startup
     {
@@ -44,6 +45,12 @@ namespace WebApp
             services.AddMediatR(typeof(Startup).Assembly);
             services.AddTransient<IGetRandomMembersTask, GetRandomMembersTask>();
             services.AddTransient<IGetRandomLocationsTask, GetRandomLocationsTask>();
+
+            services.AddCap(t=>
+            {
+                t.UseEntityFramework<AppDbContext>();
+                t.UseKafka(Configuration.GetConnectionString("BrokerList"));
+            });
             
         }
 
@@ -59,6 +66,7 @@ namespace WebApp
             }
 
             app.UseStaticFiles();
+            app.UseCap();
             
             app.UseMvc(routes =>
             {
