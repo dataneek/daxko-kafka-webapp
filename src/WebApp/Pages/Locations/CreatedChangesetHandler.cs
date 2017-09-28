@@ -7,18 +7,21 @@
     using MediatR;
     using Models;
 
-    public class LocationCreatedHandler : INotificationHandler<LocationEvent.Created>
+    public class CreatedChangesetHandler : INotificationHandler<LocationEvent.Created>
     {
         private readonly AppDbContext context;
 
-        public LocationCreatedHandler(AppDbContext context)
+        public CreatedChangesetHandler(AppDbContext context)
         {
             this.context = context;
         }
 
         void INotificationHandler<LocationEvent.Created>.Handle(LocationEvent.Created notification)
         {
-            
+            var changeset = new LocationChangeset(notification.Location, LocationChangesetMode.Create);
+
+            context.LocationChangesets.Add(changeset);
+            context.SaveChanges();
         }
     }
 }

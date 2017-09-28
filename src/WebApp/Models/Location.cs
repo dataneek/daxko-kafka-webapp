@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class Location : Entity
+    public class Location : Entity, IDeletable
     {
         public Location(ILocationUpdate c)
         {
@@ -16,12 +16,19 @@
 
         public int LocationId { get; private set; }
         public string LocationName { get; private set; }
+        public bool IsDeleted { get; private set;}
 
 
         public void Update(ILocationUpdate c)
         {
             UpdateFromChangeset(c);
             OnUpdated(new LocationEvent.Updated(this));
+        }
+
+        public void Delete()
+        {
+            IsDeleted = true;
+            OnUpdated(new LocationEvent.Updated(this), new LocationEvent.Deleted(this));
         }
 
         private void UpdateFromChangeset(ILocationUpdate c)

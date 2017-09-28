@@ -10,24 +10,27 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th> Name</th>
             <th>Email</th>
             <th>Phone</th>   
             <th>Gender</th> 
-            <th>Birthdate</th>          
+            <th>Birthdate</th>  
+            <th></th>        
         </tr>
     </thead>
     <tbody>
         @foreach(var p in Model.Members)
         {
             <tr>
-                <td>@p.Item.FirstName</td>
-                <td>@p.Item.LastName</td>
+                <td>@p.Item.LastName, @p.Item.FirstName</td>
                 <td>@p.Item.Email</td>
                 <td>@p.Item.Phone</td>   
                 <td>@p.Item.Gender</td> 
-                <td>@p.Item.Birthdate</td>          
+                <td>@p.Item.Birthdate.ToString("MM/dd/yyyy")</td>  
+                <td>
+                    <a asp-page="/Members/Update" asp-route-id="@p.Item.RowId">edit</a>
+                    <a asp-page="/Members/Delete" asp-route-id="@p.Item.RowId">delete</a>
+                </td>        
             </tr>
         }
     </tbody>

@@ -19,7 +19,6 @@ namespace WebApp.Models
 
         public int LocationChangesetId { get; private set; }
         public Guid LocationId { get; private set; }
-        public Location Location { get; private set; }
 
         public LocationChangesetMode ChangesetMode { get; private set; }
         public string Changeset { get; private set; }

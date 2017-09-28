@@ -1,4 +1,4 @@
-﻿namespace WebApp.Pages.Members
+﻿namespace WebApp.Pages.Locations
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@
     using Confluent.Kafka.Serialization;
     using Common;
 
-    public class CreatedKafkaHandler : INotificationHandler<MemberEvent.Created>
+    public class CreatedKafkaHandler : INotificationHandler<LocationEvent.Created>
     {
         private readonly KafkaSettings kafkaSettings;
 
@@ -21,18 +21,18 @@
             this.kafkaSettings = kafkaSettings;
         }
 
-        void INotificationHandler<MemberEvent.Created>.Handle(MemberEvent.Created notification)
+        void INotificationHandler<LocationEvent.Created>.Handle(LocationEvent.Created notification)
         {
             try
             {
-                HandleInternal(notification.Member);
+                HandleInternal(notification.Location);
             }
             catch(Exception) { }
         }
 
-        private void HandleInternal(Member member)
+        private void HandleInternal(Location t)
         {
-            var content = JsonConvert.SerializeObject(new MemberData(member));
+            var content = JsonConvert.SerializeObject(new LocationData(t));
             var config = new Dictionary<string, object> 
             { 
                 { "bootstrap.servers", kafkaSettings.BrokerList } 
@@ -42,7 +42,7 @@
             {
                 var deliveryReport = 
                     producer.ProduceAsync(
-                        Constants.KafkaTopics.MemberCreated, 
+                        Constants.KafkaTopics.LocationCreated, 
                         null, 
                         content);
 

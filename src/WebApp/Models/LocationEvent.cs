@@ -5,9 +5,9 @@
 
     public abstract class LocationEvent : IDomainEvent, INotification
     {
-        public LocationEvent(Location Location)
+        public LocationEvent(Location location)
         {
-            this.Location = Location ?? throw new ArgumentNullException(nameof(Location));
+            this.Location = location ?? throw new ArgumentNullException(nameof(location));
         }
 
         public Location Location { get; private set; }
@@ -15,12 +15,17 @@
 
         public class Created : LocationEvent
         {
-            public Created(Location Location) : base(Location) { }
+            public Created(Location location) : base(location) { }
         }
 
         public class Updated : LocationEvent
         {
-            public Updated(Location Location) : base(Location) { }
+            public Updated(Location location) : base(location) { }
+        }
+
+        public class Deleted : LocationEvent
+        {
+            public Deleted(Location location) : base(location) { }
         }
     }
 }
