@@ -1,5 +1,8 @@
 ﻿namespace WebApp.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Location : Entity
     {
         public Location(ILocationUpdate c)
