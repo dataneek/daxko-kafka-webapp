@@ -7,6 +7,7 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
     using PaginableCollections;
     using WebApp.Models;
 
@@ -51,7 +52,12 @@
 
         private void get_members()
         {
-            Members =  context.Members.OrderByDescending(t => t.Created).ToPaginable(1, CreateModel.page_size);
+            Members = 
+                context.Members
+                    .AsNoTracking()
+                    .OrderByDescending(t => t.Created)
+                    .ToPaginable(1, CreateModel.page_size);
+                    
             CreateModel.total_count = Members.TotalItemCount;
             CreateModel.page_count = Members.Count;
         }

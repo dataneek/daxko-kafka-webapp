@@ -4,6 +4,7 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
     using PaginableCollections;
     using WebApp.Models;
 
@@ -44,7 +45,12 @@
 
         private void get_locations()
         {
-            Locations =  context.Locations.OrderByDescending(t => t.Created).ToPaginable(1, CreateModel.page_size);
+            Locations = 
+                context.Locations
+                    .AsNoTracking()
+                    .OrderByDescending(t => t.Created)
+                    .ToPaginable(1, CreateModel.page_size);
+
             CreateModel.total_count = Locations.TotalItemCount;
             CreateModel.page_count = Locations.Count;
         }
