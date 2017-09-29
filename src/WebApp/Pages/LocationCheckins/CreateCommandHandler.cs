@@ -37,7 +37,7 @@ namespace WebApp.Pages.LocationCheckins
                            new Faker<LocationCheckinUpdate>()
                                .RuleFor(r => r.Member, s => s.PickRandom(members))
                                .RuleFor(r => r.Location, s => s.PickRandom(locations))       
-                               .RuleFor(r => r.CheckinCompleted, s => s.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
+                               .RuleFor(r => r.CheckinCompleted, s => s.Date.Between(DateTime.Now.AddHours(-1), DateTime.Now))
                                .Generate();
                    })
                    .ToArray();
