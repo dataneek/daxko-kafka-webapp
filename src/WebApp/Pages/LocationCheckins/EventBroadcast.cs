@@ -1,20 +1,16 @@
 ﻿namespace WebApp.Pages.LocationCheckins
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
-    using System.Text;
+    using DotNetCore.CAP;
     using MediatR;
     using Models;
-    using Common;
-    using DotNetCore.CAP;
 
-    public class CreatedKafkaHandler : IAsyncNotificationHandler<LocationCheckinEvent.Created>
+    public class EventBroadcast : IAsyncNotificationHandler<LocationCheckinEvent.Created>
     {
         private readonly ICapPublisher publisher;
 
-        public CreatedKafkaHandler(ICapPublisher publisher)
+        public EventBroadcast(ICapPublisher publisher)
         {
             this.publisher = publisher;
         }

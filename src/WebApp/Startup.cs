@@ -29,7 +29,11 @@ namespace WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddRazorPagesOptions(o=> 
+                {
+                    o.Conventions.AddFolderApplicationModelConvention("/", e=> e.Filters.Add(new DbContextTransactionFilter()));
+                });
 
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
