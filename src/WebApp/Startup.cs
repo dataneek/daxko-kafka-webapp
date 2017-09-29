@@ -50,6 +50,7 @@ namespace WebApp
             {
                 t.UseEntityFramework<AppDbContext>();
                 t.UseKafka(Configuration.GetConnectionString("BrokerList"));
+                t.PollingDelay = 1;
             });
             
         }
