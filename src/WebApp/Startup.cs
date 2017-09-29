@@ -11,7 +11,6 @@ namespace WebApp
     using Microsoft.EntityFrameworkCore;
     using AutoMapper;
     using MediatR;
-    using WebApp.Common;
     using WebApp.Models;
     using WebApp.Core;
     using DotNetCore.CAP;
@@ -39,9 +38,6 @@ namespace WebApp
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
 
             services.AddScoped(t => new AppDbContext(optionsBuilder.Options));           
-            services.AddScoped(t => new KafkaSettings(
-                Configuration.GetConnectionString("Zookeeper"),
-                Configuration.GetConnectionString("BrokerList")));
 
             services.AddAutoMapper();
             Mapper.AssertConfigurationIsValid();
