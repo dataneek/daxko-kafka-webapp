@@ -38,3 +38,13 @@ body {
         display: none;
     }
 }
+
+.autocomplete-result {
+    background-color: white;
+    border-bottom: 1px solid gray;
+}
+
+    
+.autocomplete-result div {
+    padding-left: 4px;
+}

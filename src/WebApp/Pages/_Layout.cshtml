@@ -51,10 +51,18 @@
     </div>
 
     <environment include="Development">
+        <script id="suggestion-template" type="text/x-handlebars-template">            
+            <div class="autocomplete-result container table-striped">
+                <div class="name row">{{FirstName}} {{LastName}}</div>
+                <div class="email row"><small>{{Email}}</small></div>
+                <div class="phone row"><small>{{Phone}}</small></div>
+            </div>
+        </script>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/corejs-typeahead/dist/bloodhound.js"></script>
         <script src="~/lib/corejs-typeahead/dist/typeahead.jquery.js"></script>
+        <script src="~/lib/handlebars/handlebars.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">

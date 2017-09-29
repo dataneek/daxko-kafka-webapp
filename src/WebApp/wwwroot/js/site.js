@@ -14,7 +14,11 @@ function getPostData(term) {
 
 function getMemberDocs(data) {
   return $.map(data.suggest.member_suggest[0].options, function(item) {
-    return item._source.FirstName + ' ' + item._source.LastName;
+    // return {
+
+    // };
+    return item._source;
+    // return item._source.FirstName + ' ' + item._source.LastName;
   });
 }
 
@@ -44,5 +48,12 @@ $('.typeahead').typeahead({
   highlight: true
 }, {
   source: members,
-  name: 'members'
+  display: function(data) {
+    return data.FirstName + ' ' + data.LastName;
+  },
+  name: 'members',
+  templates: {
+    notFound: '<div>No results found</div>',
+    suggestion: Handlebars.compile($('#suggestion-template').html())
+  }
 });
