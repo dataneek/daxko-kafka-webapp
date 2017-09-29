@@ -4,28 +4,27 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc.Filters;
 
-    public class DbContextTransactionFilter : IAsyncActionFilter
+    public class DbContextTransactionFilter : IAsyncPageFilter
     {
-        private readonly AppDbContext context;
-
-        public DbContextTransactionFilter(AppDbContext context)
+        async Task IAsyncPageFilter.OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
         {
-            this.context = context;
-        }
-
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-        {
+            var db = context.HttpContext.RequestServices.GetService(typeof(AppDbContext)) as AppDbContext;
             try
             {
-                await this.context.BeginTransactionAsync();
+                await db.BeginTransactionAsync();
                 await next();
-                await this.context.CommitTransactionAsync();
+                await db.CommitTransactionAsync();
             }
             catch (Exception)
             {
-                this.context.RollbackTransaction();
+                db.RollbackTransaction();
                 throw;
             }
+        }
+
+        Task IAsyncPageFilter.OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
+        {
+            return Task.CompletedTask;
         }
     }
 }

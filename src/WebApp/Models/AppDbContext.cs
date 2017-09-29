@@ -28,18 +28,12 @@
 
             modelBuilder.Entity<Member>().HasQueryFilter(e => !e.IsDeleted);
 
-            modelBuilder.Entity<Member>()
-                .Property(t => t.Watermark).IsRowVersion();
-
 
             modelBuilder.Entity<Location>()
                 .ToTable("Location", "dbo")
                 .HasKey(t => t.LocationId);
 
             modelBuilder.Entity<Location>().HasQueryFilter(e => !e.IsDeleted);
-
-            modelBuilder.Entity<Location>()
-                .Property(t => t.Watermark).IsRowVersion();
 
 
             modelBuilder.Entity<LocationCheckin>()

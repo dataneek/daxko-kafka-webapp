@@ -11,9 +11,9 @@ namespace WebApp
     using Microsoft.EntityFrameworkCore;
     using AutoMapper;
     using MediatR;
-    using WebApp.Common;
     using WebApp.Models;
     using WebApp.Core;
+    using DotNetCore.CAP;
 
     public class Startup
     {
@@ -28,15 +28,16 @@ namespace WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddRazorPagesOptions(o=> 
+                {
+                    o.Conventions.AddFolderApplicationModelConvention("/", e=> e.Filters.Add(new DbContextTransactionFilter()));
+                });
 
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
 
             services.AddScoped(t => new AppDbContext(optionsBuilder.Options));           
-            services.AddScoped(t => new KafkaSettings(
-                Configuration.GetConnectionString("Zookeeper"),
-                Configuration.GetConnectionString("BrokerList")));
 
             services.AddAutoMapper();
             Mapper.AssertConfigurationIsValid();
@@ -44,6 +45,12 @@ namespace WebApp
             services.AddMediatR(typeof(Startup).Assembly);
             services.AddTransient<IGetRandomMembersTask, GetRandomMembersTask>();
             services.AddTransient<IGetRandomLocationsTask, GetRandomLocationsTask>();
+
+            services.AddCap(t=>
+            {
+                t.UseEntityFramework<AppDbContext>();
+                t.UseKafka(Configuration.GetConnectionString("BrokerList"));
+            });
             
         }
 
@@ -59,6 +66,7 @@ namespace WebApp
             }
 
             app.UseStaticFiles();
+            app.UseCap();
             
             app.UseMvc(routes =>
             {
